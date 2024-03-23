@@ -3,55 +3,55 @@ function Cart(items) {
     this.goods = [];
     this.totalPrice = 0;
     this.count = 0;
-};
 
-Cart.prototype.calculateGoodsPrice = function() {
-    return this.totalPrice = this.goods.reduce((acc, item) => {
-        return acc + item.price
-    }, 0);
-};
+    this.calculateGoodsPrice = function() {
+        return this.totalPrice = this.goods.reduce((acc, item) => {
+            return acc + item.price
+        }, 0);
+    };
 
-Cart.prototype.addGoods = function() {
-    this.goods.push(this.items);
-    this.increaseCount();
-};
+    this.addGoods = function() {
+        this.goods.push(this.items);
+        this.increaseCount();
+    };
 
-Cart.prototype.getTotalPrice = function() {
-    return this.totalPrice
-};
-
-Cart.prototype.increaseCount = function() {
-    this.count = this.count + 1;
-};
-
-Cart.prototype.clear = function() {
-    this.items = this.goods[0];
-    this.goods = [];
-    this.totalPrice = 0;
-    this.count = 0;
-};
-
-Cart.prototype.print = function() {
-    console.log(JSON.stringify(this.items));
-    console.log(`Общяя стоимость корзины: ${this.totalPrice}`);
+    this.getTotalPrice = function() {
+        return this.totalPrice
+    };
+    
+    this.increaseCount = function() {
+        return this.count = this.count + 1;
+    };
+    
+    this.clear = function() {
+        this.items = this.goods[0];
+        this.goods = [];
+        this.totalPrice = 0;
+        this.count = 0;
+    };
+    
+    this.print = function() {
+        console.log(JSON.stringify(this.items));
+        console.log(`Общяя стоимость корзины: ${this.totalPrice}`);
+    };
 };
 
 function Goods(price = 0, name = ``, discount = 0) {
     this.price = price;
     this.name = name;
     this.discount = discount;
-};
 
-Goods.prototype.TechnicsGoods = function() {
-     this.calories = Math.floor(Math.random() * 100) + 1;
-};
-
-Goods.prototype.FoodGoods = function() {
-     this.material = `aluminum`;
-};
-
-Goods.prototype.СlothingGoods = function() {
-     this.type = `build`;
+    this.TechnicsGoods = function() {
+        this.calories = Math.floor(Math.random() * 100) + 1;
+   };
+   
+   this.FoodGoods = function() {
+        this.material = `aluminum`;
+   };
+   
+   this.СlothingGoods = function() {
+        this.type = `build`;
+   };
 };
 
 Object.setPrototypeOf(Goods.prototype, Cart.prototype);
