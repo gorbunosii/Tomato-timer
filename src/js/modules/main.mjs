@@ -182,6 +182,15 @@
         this.choiseTwo.textContent = 'Удалить';
         this.choiseOne.className = 'popup-button burger-popup__edit-button';
         this.choiseTwo.className = 'popup-button burger-popup__delete-button';
+        this.choiseOne.addEventListener('click', e => {
+          const izm = e.target.closest(`.pomodoro-tasks__list-task`);
+          if (a.children[1].getAttribute('contenteditable') === 'false' ||
+          izm.children[1].getAttribute('contenteditable') === null) {
+            izm.children[1].setAttribute('contenteditable', 'true');
+          } else {
+            izm.children[1].setAttribute('contenteditable', 'false');
+          }
+      });
         this.choiseTwo.addEventListener('click', e => {
           this.modalOverlay.style.cssText = `
           display: block;
@@ -245,6 +254,15 @@
         this.choiseTwo.textContent = 'Удалить';
         this.choiseOne.className = 'popup-button burger-popup__edit-button';
         this.choiseTwo.className = 'popup-button burger-popup__delete-button';
+        this.choiseOne.addEventListener('click', e => {
+          const izm = e.target.closest(`.pomodoro-tasks__list-task`);
+          if (a.children[1].getAttribute('contenteditable') === 'false' ||
+          izm.children[1].getAttribute('contenteditable') === null) {
+            izm.children[1].setAttribute('contenteditable', 'true');
+          } else {
+            izm.children[1].setAttribute('contenteditable', 'false');
+          }
+        });
         this.choiseTwo.addEventListener('click', e => {
           this.modalOverlay.style.cssText = `
           display: block;
@@ -308,7 +326,23 @@
         this.choiseTwo.textContent = 'Удалить';
         this.choiseOne.className = 'popup-button burger-popup__edit-button';
         this.choiseTwo.className = 'popup-button burger-popup__delete-button';
+        this.choiseOne.addEventListener('click', e => {
+          const izm = e.target.closest(`.pomodoro-tasks__list-task`);
+          if (a.children[1].getAttribute('contenteditable') === 'false' ||
+          izm.children[1].getAttribute('contenteditable') === null) {
+            izm.children[1].setAttribute('contenteditable', 'true');
+          } else {
+            izm.children[1].setAttribute('contenteditable', 'false');
+          }
+      });
         this.choiseTwo.addEventListener('click', e => {
+          const a = e.target.closest(`.pomodoro-tasks__quest-tasks`);
+          const b = e.target.closest(`.pomodoro-tasks__list-task`);
+          for (let i = 0; i < a.children.length; i++) {
+            if (a.children[i].children[1].textContent === b.children[1].textContent) {
+              a.children[i].remove();
+            }
+          }
           this.modalOverlay.style.cssText = `
           display: block;
           `;
@@ -344,6 +378,7 @@
       this.deleteBtn = deleteBtn;
       this.cancel = cancel;
       this.modalOverlay = modalOverlay;
+      this.starter = false;
     }
   
     addEvent() {
@@ -376,19 +411,6 @@
         border-radius: 50%;
         `;
   
-        this.selectOne.addEventListener('click', e => {
-          const hard = new Tomato();
-          hard.importance = 'Hard';
-        });
-        this.selectTwo.addEventListener('click', e => {
-          const normal = new Tomato();
-          normal.importance = 'Normal';
-        });
-        this.selectThree.addEventListener('click', e => {
-          const eazy = new Tomato();
-          eazy.importance = 'Eazy';
-        });
-  
         this.select.append(this.selectOne, this.selectTwo, this.selectThree);
         this.select.style.cssText = `
         position: absolute;
@@ -405,6 +427,26 @@
         background-color: #F4F4F4;
         border: 1px solid #C4C4C4;
         `;
+
+        this.selectOne.addEventListener('click', e => {
+          const hard = new Tomato();
+          hard.importance = 'Hard';
+          this.buttonImportance.style.cssText = `
+          background-color: #DC0D27;`;
+        });
+        this.selectTwo.addEventListener('click', e => {
+          const normal = new Tomato();
+          normal.importance = 'Normal';
+          this.buttonImportance.style.cssText = `
+          background-color: #F3EC34;`;
+        });
+        this.selectThree.addEventListener('click', e => {
+          const eazy = new Tomato();
+          eazy.importance = 'Eazy';
+          this.buttonImportance.style.cssText = `
+          background-color: #A9BB30;`;
+        });
+
         if (this.buttonImportance.childNodes.length === 0) {
           this.buttonImportance.append(this.select);
         } else {
@@ -415,7 +457,7 @@
       this.buttonStart.addEventListener('click', () => {
         const time = this.windowTimerText;
         const start = (x) => {
-          console.log(x);
+          if (this.started) {return};
           const startTime = new Date();
           const stopTime = startTime.setMinutes(startTime.getMinutes() + x / 60000);
           const countdown = setInterval(function() {
@@ -442,13 +484,14 @@
                 clearInterval(countdown);
                }
           }, 1000)
-
+          this.started = true;
           this.buttonStop.addEventListener('click', e => {
             clearInterval(countdown);
             const min = time.textContent.slice(0, 2) * 60000;
             const sec = time.textContent.slice(-2) * 1000;
             const minSec = min + sec;
             this.timer = minSec;
+            this.started = false;
           })}
           start(this.timer)
       })
@@ -459,8 +502,6 @@
         `;
       });
       this.deleteBtn.addEventListener('click', e => {
-          const hard = new Tomato();
-          hard.tasks = [];
           this.modalOverlay.style.cssText = `
           display: none;
           `;
