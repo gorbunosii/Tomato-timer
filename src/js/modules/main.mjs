@@ -519,17 +519,14 @@
     if (choise.importance === 'Eazy') {
       choise.inputValue = this.input.value
       choise.tomatoEazy();
-      choise.console();
     }
     if (choise.importance === 'Normal') {
       choise.inputValue = this.input.value
       choise.tomatoNormal();
-      choise.console();
     }
     if (choise.importance === 'Hard') {
       choise.inputValue = this.input.value
-      choise.tomatoHard();
-      choise.console();
+      choise.tomatoHard();  
     }
     }
   }
@@ -549,10 +546,6 @@
       this.importance = 'Eazy';
       this.activeTasks = '';
       Tomato._instance = this;
-    }
-
-    console() {
-      console.log(this);
     }
 
     tomatoEazy() {
@@ -581,10 +574,6 @@
 
     activeTask() {
       render.activeTaskRender(this.activeTasks);
-    }
-
-    renderInit() {
-      render.init();
     }
   }
 
